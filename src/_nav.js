@@ -31,7 +31,7 @@ const _nav = [
   },
   {
     component: CNavTitle,
-    name: "MY ORGANIZATION"
+    name: "ORGANIZATIONS"
   },
   {
     component: CNavGroup,
@@ -41,9 +41,9 @@ const _nav = [
     items: [
       {
         component: CNavItem,
-        name: "Information",
-        to: "/organization/information",
-        icon: <CIcon icon={cilInfo} customClassName="nav-icon" />
+        name: "Organizations",
+        to: "/organizations/list",
+        icon: <CIcon icon={cilBuilding} customClassName="nav-icon" />
       },
       {
         component: CNavItem,
@@ -63,66 +63,33 @@ const _nav = [
         to: "/organization/setting",
         icon: <CIcon icon={cilSettings} customClassName="nav-icon" />
       },
+      // {
+      //   component: CNavItem,
+      //   name: "API",
+      //   to: "/organization/setting",
+      //   icon: <CIcon icon={cilCode} customClassName="nav-icon" />
+      // },
       {
         component: CNavItem,
-        name: "API",
-        to: "/organization/setting",
-        icon: <CIcon icon={cilCode} customClassName="nav-icon" />
-      }
+        name: "Major",
+        to: "/major/management",
+        icon: <CIcon icon={cilBriefcase} customClassName="nav-icon" />
+      },
+      {
+        component: CNavItem,
+        name: "Subject",
+        to: "/subject/management",
+        icon: <CIcon icon={cilBook} customClassName="nav-icon" />
+      },
+      {
+        component: CNavItem,
+        name: "Classes",
+        to: "/classes/list",
+        icon: <CIcon icon={cilWindow} customClassName="nav-icon" />
+      },
     ]
   },
-  // {
-  //   component: CNavItem,
-  //   name: "Typography",
-  //   to: "/theme/typography",
-  //   icon: <CIcon icon={cilPencil} customClassName="nav-icon" />
-  // },
-  {
-    component: CNavTitle,
-    name: "TRANSCRIPT & RELATED"
-  },
-  // {
-  //   component: CNavGroup,
-  //   name: "Transcript Management",
-  //   to: "/transcript/list",
-  //   icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
-  //   items: [
-  //     {
-  //       component: CNavItem,
-  //       name: "Transcript",
-  //       to: "/transcript/list"
-  //     },
-  //     // {
-  //     //   component: CNavItem,
-  //     //   name: "New Transcript",
-  //     //   to: "/transcript/new"
-  //     // }
-  //   ]
-  // },
-  {
-    component: CNavItem,
-    name: "Transcript Management",
-    to: "/transcript/list",
-    icon: <CIcon icon={cilSpreadsheet} customClassName="nav-icon" />
-  },
-  {
-    component: CNavItem,
-    name: "Major",
-    to: "/major/management",
-    icon: <CIcon icon={cilBriefcase} customClassName="nav-icon" />
-  },
-  {
-    component: CNavItem,
-    name: "Subject",
-    to: "/subject/management",
-    icon: <CIcon icon={cilBook} customClassName="nav-icon" />
-  },
-  {
-    component: CNavItem,
-    name: "Classes",
-    to: "/classes/list",
-    icon: <CIcon icon={cilWindow} customClassName="nav-icon" />
-  },
+
 ];
 
 export default _nav;

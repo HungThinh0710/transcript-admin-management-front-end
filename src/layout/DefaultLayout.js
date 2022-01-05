@@ -9,14 +9,20 @@ const DefaultLayout = () => {
   const history = useHistory();
   const [isFetched, setIsFetched] = useState(false);
   useEffect(() => {
-    FetchAPI("GET", API.CLIENT_GET_USER)
+    FetchAPI("GET", API.ADMIN_GET_USER)
       .then(user => {
         setIsFetched(true);
       })
       .catch(error => {
         if (error.status === 401) {
           setIsFetched(true);
-          history.replace("/login");
+          history.replace({
+            pathname: "/login",
+            state: {
+              isAuthenticated: false
+            }
+
+          });
         }
       });
   }, []);

@@ -35,3 +35,14 @@ export const CLIENT_SUBJECT_MANAGEMENT = API_CLIENT + 'subjects';
 
 // Users
 export const CLIENT_GET_USER = API_CLIENT + 'users';
+
+
+//  ^
+// || ALL LIST ABOVE WILL BE DELETE
+
+
+export const ADMIN_GET_USER = API_ADMIN + 'users'
+export const ADMIN_LOGIN = API_ADMIN + 'auth/login';
+export const ADMIN_GET_ORGANIZATION = API_ADMIN + 'organizations';
+export const ADMIN_CREATE_ORGANIZATION = API_ADMIN + 'organizations';
+export const ADMIN_DEACTIVATE_ORGANIZATION = API_ADMIN + 'organizations/deactivate';

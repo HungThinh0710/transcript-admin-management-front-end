@@ -54,7 +54,7 @@ const renderRowExpanded = (rowData) => {
   );
 };
 
-const MajorManagement = () => {
+const ListOrganization = () => {
   // Common & table states
   const [loadingTable, setLoadingTable] = React.useState(false);
   const [perpage, setPerpage] = React.useState(10);
@@ -192,10 +192,10 @@ const MajorManagement = () => {
 
   const handleSaveSubjects = () => {
     if (majorIdPickerSelected === null) return toast.warning("You must select major");
-      const data = {
-        major_id: majorIdPickerSelected,
-        subjects: valueSubjectPicker == null ? [] : valueSubjectPicker
-      };
+    const data = {
+      major_id: majorIdPickerSelected,
+      subjects: valueSubjectPicker == null ? [] : valueSubjectPicker
+    };
     fetchAssignSubjects(data);
   };
 
@@ -485,4 +485,4 @@ const MajorManagement = () => {
   );
 };
 
-export default MajorManagement;
+export default ListOrganization;

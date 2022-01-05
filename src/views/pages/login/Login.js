@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {
   CButton,
   CCard,
@@ -28,26 +28,15 @@ const Login = () => {
   const [wallet, setWallet] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
-
+  const location = useLocation();
   const history = useHistory();
+
   let fileReader;
 
   const validateInfo = () => {
-    return email.length > 0 && password.length > 0 && wallet.length > 0;
+    return email.length > 0 && password.length > 0;
   };
 
-  const handleFileRead = e => {
-    setWallet(fileReader.result);
-  };
-
-  const onUploadCredentials = e => {
-    let file = e.target.files;
-    if (file.length > 0) {
-      fileReader = new FileReader();
-      fileReader.onloadend = handleFileRead;
-      fileReader.readAsText(file[0]);
-    } else toast.warning("Please select your secret key!");
-  };
 
   const fetchLogin = () => new Promise((resolve, reject) => {
       axios.post(API.CLIENT_LOGIN, {
@@ -77,17 +66,27 @@ const Login = () => {
     setIsLoading(true);
     if (validateInfo()) {
       toast.promise(
-        fetchLogin,
+        FetchAPI("POST", API.ADMIN_LOGIN, {email: email, password: password}),
         {
           pending: "Please waiting...",
           success: {
             render({ data }) {
-              return history.push("/dashboard");
+              setIsLoading(false);
+              if(data.success === true){
+                return history.replace("/dashboard");
+              }
             }
           },
           error: {
             render({ data }) {
-              return data;
+              setIsLoading(false);
+
+              console.log("DATA");
+              console.log(data);
+              if(data.data.success === false){
+                return data.data.message;
+              }
+              return data.data.message;
             }
           }
         }
@@ -99,20 +98,21 @@ const Login = () => {
   };
 
   useEffect(() => {
-    setIsLogged(false);
-    FetchAPI("GET", API.CLIENT_GET_USER)
-      .then(payload => {
-        console.log("success");
-        console.log(payload.success);
-        if (payload.success === true) {
-          history.push('/dashboard')
+    if(typeof location.state !== "undefined"){
+      setIsLogged(true)
+    }
+    else{
+      FetchAPI("GET", API.ADMIN_GET_USER)
+        .then(payload => {
+          if (payload.success === true) {
+            history.replace('/dashboard')
+            setIsLogged(true);
+          }
+        })
+        .catch(error => {
           setIsLogged(true);
-        }
-      })
-      .catch(error => {
-        setIsLogged(true);
-      });
-
+        });
+    }
   }, []);
 
   return (
@@ -138,8 +138,8 @@ const Login = () => {
                       : (
                         <>
                           <CForm>
-                            <h1>Login</h1>
-                            <p className="text-medium-emphasis">Sign In to your organization</p>
+                            <h1>ADMIN LOGIN</h1>
+                            <p className="text-medium-emphasis">Sign In to your admin site</p>
                             <CInputGroup className="mb-3">
                               <CInputGroupText>
                                 <CIcon icon={cibMailRu} />
@@ -166,18 +166,6 @@ const Login = () => {
                                 autoComplete="current-password"
                               />
                             </CInputGroup>
-                            <CInputGroup>
-                              <div className="mb-3">
-                                <CFormLabel htmlFor="formFileSm">Your Secret key</CFormLabel>
-                                <CFormInput
-                                  accept=".key"
-                                  onChange={onUploadCredentials}
-                                  type="file"
-                                  size="sm"
-                                  id="formFileSm"
-                                  required={true} />
-                              </div>
-                            </CInputGroup>
                             <CRow>
                               <CCol xs={6}>
                                 <CButton
@@ -190,11 +178,11 @@ const Login = () => {
                                   Login
                                 </CButton>
                               </CCol>
-                              <CCol xs={6} className="text-right">
-                                <CButton color="link" className="px-0">
-                                  Forgot password?
-                                </CButton>
-                              </CCol>
+                              {/*<CCol xs={6} className="text-right">*/}
+                              {/*  <CButton color="link" className="px-0">*/}
+                              {/*    Forgot password?*/}
+                              {/*  </CButton>*/}
+                              {/*</CCol>*/}
                             </CRow>
                           </CForm>
                         </>
@@ -206,9 +194,9 @@ const Login = () => {
                 <CCardBody className="text-center">
                   <div>
                     <h2>Transcript Management</h2>
-                    <p>
-                      An application help us manage transcript and diploma through Blockchain system.
-                    </p>
+                    <h2>
+                      ADMIN SITE
+                    </h2>
                     <p>Copyright 2021 Phoenix - VKU</p>
                     {/* <Link to="/register">
                     <CButton color="primary" className="mt-3" active tabIndex={-1}>
